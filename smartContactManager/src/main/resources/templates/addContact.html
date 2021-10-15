@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="userLayout::layout(~{::section})">
+<head>
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Contact</title>
+</head>
+<body>
+	<section>
+		<div class="card mr-3 ml-3">
+			<div class="card-body">
+				<h1 class="text-center">Add Contact</h1>
+				<div class="container-fluid mt-1">
+					<div class="row">
+						<div class="col-md-8 offset-md-2">
+							<form action="" th:action="@{/user/saveContact}" method="post"
+								th:object="${contact}" enctype="multipart/form-data"
+								class="mt-2">
+								<!-- First name  -->
+								<div class="input-group flex-nowrap mt-3">
+									<div class="input-group-text">
+										<i class="fa fa-plus"></i>
+									</div>
+									<input type="text" name="name" placeholder="Enter name"
+										class="form-control" id="firstname" />
+								</div>
+
+								<!-- Second name  -->
+								<div class="input-group flex-nowrap mt-3">
+									<div class="input-group-text">
+										<i class="fas fa-user-alt"></i>
+									</div>
+									<input type="text" name="lastName"
+										placeholder="Enter last Name" class="form-control"
+										id="lastName" />
+								</div>
+
+								<!-- Email  -->
+								<div class="input-group flex-nowrap mt-3">
+									<div class="input-group-text">@</div>
+									<input type="email" name="email" placeholder="Enter Email"
+										class="form-control" id="email" />
+								</div>
+
+								<!-- Work  -->
+								<div class="input-group flex-nowrap mt-3">
+									<div class="input-group-text">
+										<i class="fa fa-briefcase"></i>
+									</div>
+									<input type="text" name="work" placeholder="Enter work"
+										class="form-control" id="work" />
+								</div>
+
+								<!-- phone  -->
+								<div class="input-group flex-nowrap mt-3">
+									<div class="input-group-text">
+										<i class="fas fa-phone"></i>
+									</div>
+									<input type="number" name="phone" placeholder="Enter phone"
+										class="form-control" id="phone" />
+								</div>
+
+								<!-- 	contact Description -->
+								<div class="form-group mt-3">
+									<textarea name="description" id="mytextarea" rows="10"
+										class="form-control" placeholder="Enter the description"></textarea>
+								</div>
+
+								<!-- image  -->
+								<div class="input-group flex-nowrap mt-3">
+									<input type="file" name="image1" placeholder="Select image"
+										class="form-control" id="image" />
+								</div>
+
+								<div class="container text-center mt-3">
+									<button class="btn btn-outline-primary">Save Contact</button>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script
+			src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"
+			referrerpolicy="origin"></script>
+
+		<script>
+      tinymce.init({
+        selector: '#mytextarea'
+      });
+    </script>
+
+	</section>
+</body>
+</html>

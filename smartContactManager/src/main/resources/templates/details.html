@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="userLayout::layout(~{::section})">
+<head>
+<head>
+<meta charset="ISO-8859-1">
+<title>Show Contact</title>
+</head>
+<body>
+	<section>
+
+		<div class="card mr-3 ml-3 ">
+			<div class="card-body" th:if=${contact}>
+				<div class="container text-center">
+					<img alt="asd" src="" th:src="@{'/img/' + ${contact.image}}"
+						class="image">
+					<h3 class="mt-3">
+						<span th:text="${contact.name}"></span> (<span
+							th:text="${contact.lastName}"></span>)
+					</h3>
+
+					<table class="table table-striped">
+
+						<tbody>
+							<tr>
+								<th scope="row">#ID</th>
+								<td><span th:text="${'SCM2020' + contact.id}"></span></td>
+							</tr>
+							<tr>
+								<th scope="row">Name</th>
+								<td><span th:text="${contact.name}"></span></td>
+							</tr>
+
+							<tr>
+								<th scope="row">Email</th>
+								<td><span th:text="${contact.email}"></span></td>
+							</tr>
+
+							<tr>
+								<th scope="row">Phone</th>
+								<td><span th:text="${contact.phone}"></span></td>
+							</tr>
+						</tbody>
+
+					</table>
+					<div class="description">
+						<th:block th:utext="${contact.description}"></th:block>
+					</div>
+
+					<div class="d-grid gap-2 mt-3">
+						<a href="" th:href="@{'/user/edit/' + ${contact.id}}"
+							class="btn btn-primary btn-sm">Edit</a> <a href=""
+							th:href="@{'/user/delete/' + ${contact.id}}"
+							class="btn btn-danger btn-sm">Delete</a>
+					</div>
+
+				</div>
+			</div>
+
+			<h1 th:unless=${contact}>You do't have permission to see</h1>
+		</div>
+	</section>
+</body>
+</html>

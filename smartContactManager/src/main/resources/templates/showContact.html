@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="userLayout::layout(~{::section})">
+<head>
+<head>
+<meta charset="ISO-8859-1">
+<title>Show Contact</title>
+</head>
+<body>
+	<section>
+
+		<div class="card mr-3 ml-3 ">
+			<div class="card-body">
+				<h1 class="text-center">Your Card</h1>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">#ID</th>
+							<th scope="col">Name</th>
+							<th scope="col">Email</th>
+							<th scope="col">Phone</th>
+							<th scope="col">Image</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="c : ${contacts}">
+							<th scope="row" th:text="${'SCM2020' + c.id}">1</th>
+							<td th:text="${c.name}">Mark</td>
+							<td>
+								<a href="#" th:href="@{'/user/' + ${c.id} + '/contact'}" >
+									<span th:text="${c.email}"></span>
+								</a>
+							</td>
+							<td th:text="${c.phone}">@mdo</td>
+							<td>
+								<img alt="asd" src="" th:src="@{'/img/' + ${c.image}}" class="image">
+							</td>
+							<td>
+								<a href="" th:href="@{'/user/delete/' + ${c.id}}" class="btn btn-primary btn-sm">Delete</a>
+								<form action="" th:action="@{'/user/edit/' + ${c.id}}" method="post">
+									<button  type="submit" class="btn btn-danger btn-sm">Edit</button>
+								</form>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<!-- pagination -->
+
+				<nav aria-label="...">
+					<ul class="pagination">
+						<li class="page-item"  th:if="${currentPage != 0}"> 
+							<a th:href="@{'/user/list/' + ${currentPage-1}}" class="page-link" href="#">Previous</a>
+						</li>
+						<li th:classappend="${currentPage == i-1 ? 'active' : ''}" th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item">
+							<a th:href="@{'/user/list/' + ${i-1}}" class="page-link" href="#" th:text="${i}">1</a>
+						</li>
+						<li class="page-item" th:if="${currentPage + 1 != totalPages}">
+							<a th:href="@{'/user/list/' + ${currentPage+1}}" class="page-link" href="#">Next</a>
+						</li>
+					</ul>
+				</nav>
+
+
+			</div>
+		</div>
+	</section>
+</body>
+</html>

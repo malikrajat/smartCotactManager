@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="userLayout::layout(~{::section})">
+<head>
+<head>
+<meta charset="ISO-8859-1">
+<title>Show Contact</title>
+</head>
+<body>
+	<section>
+
+		<div class="container">
+			<div class="card">
+				<div class="card-body">
+				<h1 class="text-center" th:text="${user.name}"></h1>
+					<table class="table table-striped">
+						<tbody>
+							<tr>
+								<th scope="row">#ID</th>
+								<td><span th:text="${'SCM2020' + user.id}"></span></td>
+							</tr>
+							<tr>
+								<th scope="row">Name</th>
+								<td><span th:text="${user.name}"></span></td>
+							</tr>
+
+							<tr>
+								<th scope="row">Email</th>
+								<td><span th:text="${user.email}"></span></td>
+							</tr>
+
+
+
+							<tr>
+								<th scope="row">Role</th>
+								<td><span th:text="${user.role}"></span></td>
+							</tr>
+
+
+							<tr>
+								<th scope="row">Active</th>
+								<td><span th:text="${user.enabled}"></span></td>
+							</tr>
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
