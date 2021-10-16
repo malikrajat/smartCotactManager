@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -43,6 +44,7 @@ public class Contact {
 	private String description;
 	
 	@ManyToOne
+	@JsonIgnore
 	private User user;
 
 	@CreationTimestamp
