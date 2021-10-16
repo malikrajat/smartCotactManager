@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="userLayout::layout(~{::section})">
+<head>
+<head>
+<meta charset="ISO-8859-1">
+<title>Show Contact</title>
+</head>
+<body>
+	<section>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-body">
+							<h3 class="text-center my-3">Change Password</h3>
+							<form action="" th:action="@{/user/saveSetting}" method="post">
+								<!-- old password -->
+								<div class="input-group flex-nowrap mt-3">
+									<input type="text" class="form-control" name="oldpassword"
+										placeholder="Enter old password" />
+								</div>
+								<!-- 								new password -->
+								<div class="input-group flex-nowrap mt-3">
+									<input type="text" class="form-control" name="password"
+										placeholder="Enter new password" />
+								</div>
+								<!-- 								confirm password -->
+								<div class="input-group flex-nowrap mt-3">
+									<input type="text" class="form-control" name="cpassword"
+										placeholder="Enter confirm  password" />
+								</div>
+								
+								<div class="container text-center mt-3">
+									<button  type="submit" class="btn btn-primary">Submit</button>
+									<button  type="reset" class="btn btn-warning">Reset</button>	
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

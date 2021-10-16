@@ -60,13 +60,14 @@
 		<span class="crossbtn" onclick="toggleSidebar()">&times;</span> <a
 			href="#" th:href="@{/user/index}" class="item"> <i
 			class="fas fa-home"></i> Home
-		</a> <a href="#" th:href=@{/user/list/0} class="item"> <i class="fas fa-id-card-alt"></i> View
-			Contents
+		</a> <a href="#" th:href=@{/user/list/0} class="item"> <i
+			class="fas fa-id-card-alt"></i> View Contents
 		</a> <a href="#" th:href="@{/user/add-contact}" class="item"> <i
 			class="fas fa-pencil-alt"></i> Add Content
-		</a> <a href="#" th:href="@{/user/profile}"class="item"> <i class="fas fa-user-circle"></i> Your
-			profile
-		</a> <a href="#" class="item"> <i class="fas fa-cogs"></i> Setting
+		</a> <a href="#" th:href="@{/user/profile}" class="item"> <i
+			class="fas fa-user-circle"></i> Your profile
+		</a> <a href="#" th:href="@{/user/setting}" class="item"> <i
+			class="fas fa-cogs"></i> Setting
 		</a> <a href="#" th:href="@{/logout}" class="item"> <i
 			class="fas fa-sign-out-alt"></i> Logout
 		</a>
@@ -79,7 +80,8 @@
 		<i class="fas fa-bars m-3" onclick="toggleSidebar()"></i>
 		<!-- 		message box -->
 		<div th:if="${session.message}" class="container">
-			<div class="alert text-center" role="alert" th:classappend="${'alert-' + session.message.type}">
+			<div class="alert text-center" role="alert"
+				th:classappend="${'alert-' + session.message.type}">
 				<span th:text="${session.message.content}"></span>
 			</div>
 			<th:block th:text="${#session.removeAttribute('message')}"></th:block>
