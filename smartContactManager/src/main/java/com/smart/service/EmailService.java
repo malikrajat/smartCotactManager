@@ -39,7 +39,7 @@ public class EmailService {
 		Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 			@Override
 			protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-				return new javax.mail.PasswordAuthentication("arrayjson@gmail.com", "X75b*2(AJ");
+				return new javax.mail.PasswordAuthentication("arrayjson@gmail.com", "enter password");
 			}
 
 		});

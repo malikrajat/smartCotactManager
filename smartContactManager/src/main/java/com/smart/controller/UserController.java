@@ -287,19 +287,20 @@ public class UserController {
 	@PostMapping("/changePasssword")
 	public String changePasssword(@RequestParam("password") String password,
 			@RequestParam("cpassword") String cpassword, Model m, Principal principa, HttpSession session) {
-
-		if (password == cpassword) {
+		System.out.println(password);
+		System.out.println(cpassword);
+		if (password.equals(cpassword)) {
 			String myemail = (String) session.getAttribute("email");
 			User user = userRepo.getUserByUserName(myemail);
 			String password2 = user.getPassword();
 
 			user.setPassword(this.bCryptPasswordEncoder.encode(password));
-			session.setAttribute("message", new Message("Password changed !!", "success"));
+			this.userRepo.save(user);
 			
-			return "redirect:/user/index";
+			return "redirect:/singin?change=Password changed."; 
 		} else {
-			System.out.println("please enter correct old password");
-			session.setAttribute("message", new Message("Please enter correct password and confirm password", "danger"));
+			System.out.println("Password do not match");
+			session.setAttribute("message", new Message("Please enter matching password and confirm password", "danger"));
 			return "changePassword";
 		}
 
