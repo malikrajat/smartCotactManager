@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,6 +33,7 @@ import com.smart.dao.UserRepository;
 import com.smart.entities.Contact;
 import com.smart.entities.User;
 import com.smart.helper.Message;
+import com.smart.service.EmailService;
 
 @Controller
 @RequestMapping("/user")
@@ -45,6 +47,9 @@ public class UserController {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	private EmailService emailService;
 
 	@ModelAttribute
 	public void addCommanData(Model model, Principal principal) {
@@ -205,13 +210,9 @@ public class UserController {
 	}
 
 	@PostMapping("/saveSetting")
-	public String saveSetting(
-			@RequestParam("oldpassword") String oldpassword,
-			@RequestParam("password") String password,
-			@RequestParam("cpassword") String cpassword, 
-			Model m,
-			Principal principa, 
-			HttpSession session) {
+	public String saveSetting(@RequestParam("oldpassword") String oldpassword,
+			@RequestParam("password") String password, @RequestParam("cpassword") String cpassword, Model m,
+			Principal principa, HttpSession session) {
 		User user = userRepo.getUserByUserName(principa.getName());
 		String password2 = user.getPassword();
 		if (password == cpassword) {
@@ -229,6 +230,79 @@ public class UserController {
 		}
 
 		return "redirect:/user/index";
+	}
+
+	@GetMapping("/forgotPassword")
+	public String forgotPassword(Model m, Principal principa, HttpSession session) {
+
+		return "forgotPassword";
+
+	}
+
+	@PostMapping("/sendOtp")
+	public String forgotsendOtp(@RequestParam("email") String email, Model m, Principal principa, HttpSession session) {
+		Random random = new Random();
+		int otp = random.nextInt(999999);
+		System.out.println(otp);
+		System.out.println(email);
+		String message = "<h1>" + otp + "</h1>";
+		// Did you switch on less secure app from gmail account
+		// https://myaccount.google.com/lesssecureapps
+		boolean sendEmail = this.emailService.sendEmail(message, "OTP", email);
+		if (sendEmail) {
+			session.setAttribute("myOtp", otp);
+			session.setAttribute("email", email);
+			session.setAttribute("message",
+					new Message("OTP is send successfully, Please check email !! .", "success"));
+			return "sendOtp";
+		} else {
+			session.setAttribute("message", new Message("Check for email .", "danger"));
+			return "forgotPassword";
+		}
+
+	}
+
+	@PostMapping("/verifyOtp")
+	public String verifyOtp(@RequestParam("otp") int otp, Model m, Principal principa, HttpSession session) {
+
+		Integer myotp = (int) session.getAttribute("myOtp");
+		if (otp == myotp) {
+			String myemail = (String) session.getAttribute("email");
+			User user = userRepo.getUserByUserName(myemail);
+			if(user == null) {
+				session.setAttribute("message", new Message("Use dos not exits. Pelase check your email.", "danger"));
+				return "forgotPassword";
+			} else {
+				return "changePassword";
+			}
+			
+		} else {
+			session.setAttribute("message", new Message(" You have entered wrong OTP !.", "danger"));
+			return "sendOtp";
+
+		}
+
+	}
+
+	@PostMapping("/changePasssword")
+	public String changePasssword(@RequestParam("password") String password,
+			@RequestParam("cpassword") String cpassword, Model m, Principal principa, HttpSession session) {
+
+		if (password == cpassword) {
+			String myemail = (String) session.getAttribute("email");
+			User user = userRepo.getUserByUserName(myemail);
+			String password2 = user.getPassword();
+
+			user.setPassword(this.bCryptPasswordEncoder.encode(password));
+			session.setAttribute("message", new Message("Password changed !!", "success"));
+			
+			return "redirect:/user/index";
+		} else {
+			System.out.println("please enter correct old password");
+			session.setAttribute("message", new Message("Please enter correct password and confirm password", "danger"));
+			return "changePassword";
+		}
+
 	}
 
 }
